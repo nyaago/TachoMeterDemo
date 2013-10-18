@@ -15,7 +15,6 @@
 		723200561810E9E10083D297 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 723200541810E9E10083D297 /* InfoPlist.strings */; };
 		723200581810E9E10083D297 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 723200571810E9E10083D297 /* main.m */; };
 		7232005C1810E9E10083D297 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7232005B1810E9E10083D297 /* AppDelegate.m */; };
-		7232005F1810E9E10083D297 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7232005D1810E9E10083D297 /* Main.storyboard */; };
 		723200611810E9E10083D297 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 723200601810E9E10083D297 /* Shader.fsh */; };
 		723200631810E9E10083D297 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 723200621810E9E10083D297 /* Shader.vsh */; };
 		723200661810E9E10083D297 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 723200651810E9E10083D297 /* ViewController.m */; };
@@ -25,6 +24,8 @@
 		723200711810E9E10083D297 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7232004B1810E9E10083D297 /* UIKit.framework */; };
 		723200791810E9E10083D297 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 723200771810E9E10083D297 /* InfoPlist.strings */; };
 		7232007B1810E9E10083D297 /* TachoMeterDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7232007A1810E9E10083D297 /* TachoMeterDemoTests.m */; };
+		723200871810ED430083D297 /* NYGLKView.m in Sources */ = {isa = PBXBuildFile; fileRef = 723200861810ED430083D297 /* NYGLKView.m */; };
+		72AEC5A3181115ED00A9F656 /* TachoMeterRenderere.m in Sources */ = {isa = PBXBuildFile; fileRef = 72AEC5A2181115ED00A9F656 /* TachoMeterRenderere.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +51,6 @@
 		723200591810E9E10083D297 /* TachoMeterDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TachoMeterDemo-Prefix.pch"; sourceTree = "<group>"; };
 		7232005A1810E9E10083D297 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7232005B1810E9E10083D297 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		7232005E1810E9E10083D297 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		723200601810E9E10083D297 /* Shader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.fsh; path = Shaders/Shader.fsh; sourceTree = "<group>"; };
 		723200621810E9E10083D297 /* Shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.vsh; path = Shaders/Shader.vsh; sourceTree = "<group>"; };
 		723200641810E9E10083D297 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
@@ -61,6 +61,10 @@
 		723200761810E9E10083D297 /* TachoMeterDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TachoMeterDemoTests-Info.plist"; sourceTree = "<group>"; };
 		723200781810E9E10083D297 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7232007A1810E9E10083D297 /* TachoMeterDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TachoMeterDemoTests.m; sourceTree = "<group>"; };
+		723200851810ED430083D297 /* NYGLKView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NYGLKView.h; sourceTree = "<group>"; };
+		723200861810ED430083D297 /* NYGLKView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NYGLKView.m; sourceTree = "<group>"; };
+		72AEC5A1181115ED00A9F656 /* TachoMeterRenderere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TachoMeterRenderere.h; sourceTree = "<group>"; };
+		72AEC5A2181115ED00A9F656 /* TachoMeterRenderere.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TachoMeterRenderere.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +96,7 @@
 		7232003B1810E9E10083D297 = {
 			isa = PBXGroup;
 			children = (
+				723200841810ECC80083D297 /* OpenGL */,
 				723200511810E9E10083D297 /* TachoMeterDemo */,
 				723200741810E9E10083D297 /* TachoMeterDemoTests */,
 				723200461810E9E10083D297 /* Frameworks */,
@@ -126,7 +131,6 @@
 			children = (
 				7232005A1810E9E10083D297 /* AppDelegate.h */,
 				7232005B1810E9E10083D297 /* AppDelegate.m */,
-				7232005D1810E9E10083D297 /* Main.storyboard */,
 				723200601810E9E10083D297 /* Shader.fsh */,
 				723200621810E9E10083D297 /* Shader.vsh */,
 				723200641810E9E10083D297 /* ViewController.h */,
@@ -164,6 +168,17 @@
 				723200771810E9E10083D297 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		723200841810ECC80083D297 /* OpenGL */ = {
+			isa = PBXGroup;
+			children = (
+				723200851810ED430083D297 /* NYGLKView.h */,
+				723200861810ED430083D297 /* NYGLKView.m */,
+				72AEC5A1181115ED00A9F656 /* TachoMeterRenderere.h */,
+				72AEC5A2181115ED00A9F656 /* TachoMeterRenderere.m */,
+			);
+			path = OpenGL;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -246,7 +261,6 @@
 				723200681810E9E10083D297 /* Images.xcassets in Resources */,
 				723200611810E9E10083D297 /* Shader.fsh in Resources */,
 				723200561810E9E10083D297 /* InfoPlist.strings in Resources */,
-				7232005F1810E9E10083D297 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,8 +279,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				72AEC5A3181115ED00A9F656 /* TachoMeterRenderere.m in Sources */,
 				723200661810E9E10083D297 /* ViewController.m in Sources */,
 				7232005C1810E9E10083D297 /* AppDelegate.m in Sources */,
+				723200871810ED430083D297 /* NYGLKView.m in Sources */,
 				723200581810E9E10083D297 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -296,14 +312,6 @@
 				723200551810E9E10083D297 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		7232005D1810E9E10083D297 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7232005E1810E9E10083D297 /* Base */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		723200771810E9E10083D297 /* InfoPlist.strings */ = {
@@ -476,6 +484,7 @@
 				723200801810E9E10083D297 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		723200811810E9E10083D297 /* Build configuration list for PBXNativeTarget "TachoMeterDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -484,6 +493,7 @@
 				723200831810E9E10083D297 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

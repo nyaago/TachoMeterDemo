@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <GLKit/GLKit.h>
+#import "NYGLKView.h"
 
-@interface ViewController : GLKViewController
+@interface ViewController : UIViewController
+
+@property (nonatomic, strong) NYGLKView *tachoMeterView;
+@property (nonatomic, strong) NYGLKView *secondView;
 
 @end
