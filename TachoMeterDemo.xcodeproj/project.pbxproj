@@ -26,6 +26,7 @@
 		7232007B1810E9E10083D297 /* TachoMeterDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7232007A1810E9E10083D297 /* TachoMeterDemoTests.m */; };
 		723200871810ED430083D297 /* NYGLKView.m in Sources */ = {isa = PBXBuildFile; fileRef = 723200861810ED430083D297 /* NYGLKView.m */; };
 		72AEC5A3181115ED00A9F656 /* TachoMeterRenderere.m in Sources */ = {isa = PBXBuildFile; fileRef = 72AEC5A2181115ED00A9F656 /* TachoMeterRenderere.m */; };
+		72FDFA8518117EF0004536D6 /* ShaderLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 72FDFA8418117EF0004536D6 /* ShaderLoader.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,8 @@
 		723200861810ED430083D297 /* NYGLKView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NYGLKView.m; sourceTree = "<group>"; };
 		72AEC5A1181115ED00A9F656 /* TachoMeterRenderere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TachoMeterRenderere.h; sourceTree = "<group>"; };
 		72AEC5A2181115ED00A9F656 /* TachoMeterRenderere.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TachoMeterRenderere.m; sourceTree = "<group>"; };
+		72FDFA8318117EF0004536D6 /* ShaderLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderLoader.h; sourceTree = "<group>"; };
+		72FDFA8418117EF0004536D6 /* ShaderLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShaderLoader.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +180,8 @@
 				723200861810ED430083D297 /* NYGLKView.m */,
 				72AEC5A1181115ED00A9F656 /* TachoMeterRenderere.h */,
 				72AEC5A2181115ED00A9F656 /* TachoMeterRenderere.m */,
+				72FDFA8318117EF0004536D6 /* ShaderLoader.h */,
+				72FDFA8418117EF0004536D6 /* ShaderLoader.m */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
@@ -279,6 +284,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				72FDFA8518117EF0004536D6 /* ShaderLoader.m in Sources */,
 				72AEC5A3181115ED00A9F656 /* TachoMeterRenderere.m in Sources */,
 				723200661810E9E10083D297 /* ViewController.m in Sources */,
 				7232005C1810E9E10083D297 /* AppDelegate.m in Sources */,
