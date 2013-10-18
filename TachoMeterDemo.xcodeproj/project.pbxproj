@@ -27,6 +27,9 @@
 		723200871810ED430083D297 /* NYGLKView.m in Sources */ = {isa = PBXBuildFile; fileRef = 723200861810ED430083D297 /* NYGLKView.m */; };
 		72AEC5A3181115ED00A9F656 /* TachoMeterRenderere.m in Sources */ = {isa = PBXBuildFile; fileRef = 72AEC5A2181115ED00A9F656 /* TachoMeterRenderere.m */; };
 		72FDFA8518117EF0004536D6 /* ShaderLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 72FDFA8418117EF0004536D6 /* ShaderLoader.m */; };
+		72FDFA8818118BB8004536D6 /* FloatArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 72FDFA8718118BB8004536D6 /* FloatArray.m */; };
+		72FDFA8B18118E7D004536D6 /* GLShapeDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 72FDFA8A18118E7D004536D6 /* GLShapeDrawer.m */; };
+		72FDFA8E181190D0004536D6 /* GLColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 72FDFA8D181190D0004536D6 /* GLColor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +71,12 @@
 		72AEC5A2181115ED00A9F656 /* TachoMeterRenderere.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TachoMeterRenderere.m; sourceTree = "<group>"; };
 		72FDFA8318117EF0004536D6 /* ShaderLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderLoader.h; sourceTree = "<group>"; };
 		72FDFA8418117EF0004536D6 /* ShaderLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShaderLoader.m; sourceTree = "<group>"; };
+		72FDFA8618118BB8004536D6 /* FloatArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FloatArray.h; sourceTree = "<group>"; };
+		72FDFA8718118BB8004536D6 /* FloatArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FloatArray.m; sourceTree = "<group>"; };
+		72FDFA8918118E7D004536D6 /* GLShapeDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLShapeDrawer.h; sourceTree = "<group>"; };
+		72FDFA8A18118E7D004536D6 /* GLShapeDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLShapeDrawer.m; sourceTree = "<group>"; };
+		72FDFA8C181190D0004536D6 /* GLColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLColor.h; sourceTree = "<group>"; };
+		72FDFA8D181190D0004536D6 /* GLColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLColor.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,12 +185,18 @@
 		723200841810ECC80083D297 /* OpenGL */ = {
 			isa = PBXGroup;
 			children = (
+				72FDFA8C181190D0004536D6 /* GLColor.h */,
+				72FDFA8D181190D0004536D6 /* GLColor.m */,
+				72FDFA8618118BB8004536D6 /* FloatArray.h */,
+				72FDFA8718118BB8004536D6 /* FloatArray.m */,
 				723200851810ED430083D297 /* NYGLKView.h */,
 				723200861810ED430083D297 /* NYGLKView.m */,
 				72AEC5A1181115ED00A9F656 /* TachoMeterRenderere.h */,
 				72AEC5A2181115ED00A9F656 /* TachoMeterRenderere.m */,
 				72FDFA8318117EF0004536D6 /* ShaderLoader.h */,
 				72FDFA8418117EF0004536D6 /* ShaderLoader.m */,
+				72FDFA8918118E7D004536D6 /* GLShapeDrawer.h */,
+				72FDFA8A18118E7D004536D6 /* GLShapeDrawer.m */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
@@ -287,8 +302,11 @@
 				72FDFA8518117EF0004536D6 /* ShaderLoader.m in Sources */,
 				72AEC5A3181115ED00A9F656 /* TachoMeterRenderere.m in Sources */,
 				723200661810E9E10083D297 /* ViewController.m in Sources */,
+				72FDFA8B18118E7D004536D6 /* GLShapeDrawer.m in Sources */,
 				7232005C1810E9E10083D297 /* AppDelegate.m in Sources */,
 				723200871810ED430083D297 /* NYGLKView.m in Sources */,
+				72FDFA8E181190D0004536D6 /* GLColor.m in Sources */,
+				72FDFA8818118BB8004536D6 /* FloatArray.m in Sources */,
 				723200581810E9E10083D297 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

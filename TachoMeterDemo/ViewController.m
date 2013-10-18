@@ -23,12 +23,12 @@
   _tachoMeterView = [[NYGLKView alloc] initWithFrame:rect];
   _tachoMeterView.renderer = [[TachoMeterRenderere alloc] initWithView:_tachoMeterView];
   [self.view addSubview:_tachoMeterView];
-
+/*
   rect = CGRectMake(0, frame.size.height / 2, frame.size.height / 2, frame.size.height / 2);
   _secondView = [[NYGLKView alloc] initWithFrame:rect];
   _secondView.renderer = [[TachoMeterRenderere alloc] initWithView:_secondView];
   [self.view addSubview:_secondView];
- 
+ */
 
 }
 
