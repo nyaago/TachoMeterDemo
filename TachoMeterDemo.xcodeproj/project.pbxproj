@@ -30,6 +30,8 @@
 		72FDFA8818118BB8004536D6 /* FloatArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 72FDFA8718118BB8004536D6 /* FloatArray.m */; };
 		72FDFA8B18118E7D004536D6 /* GLShapeDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 72FDFA8A18118E7D004536D6 /* GLShapeDrawer.m */; };
 		72FDFA8E181190D0004536D6 /* GLColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 72FDFA8D181190D0004536D6 /* GLColor.m */; };
+		72FDFA911811E059004536D6 /* Vector2.m in Sources */ = {isa = PBXBuildFile; fileRef = 72FDFA901811E059004536D6 /* Vector2.m */; };
+		72FDFA941811FAA8004536D6 /* MyTachoMeterParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = 72FDFA931811FAA8004536D6 /* MyTachoMeterParameters.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +79,10 @@
 		72FDFA8A18118E7D004536D6 /* GLShapeDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLShapeDrawer.m; sourceTree = "<group>"; };
 		72FDFA8C181190D0004536D6 /* GLColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLColor.h; sourceTree = "<group>"; };
 		72FDFA8D181190D0004536D6 /* GLColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLColor.m; sourceTree = "<group>"; };
+		72FDFA8F1811E059004536D6 /* Vector2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector2.h; sourceTree = "<group>"; };
+		72FDFA901811E059004536D6 /* Vector2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vector2.m; sourceTree = "<group>"; };
+		72FDFA921811FAA8004536D6 /* MyTachoMeterParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTachoMeterParameters.h; sourceTree = "<group>"; };
+		72FDFA931811FAA8004536D6 /* MyTachoMeterParameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTachoMeterParameters.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +155,8 @@
 				723200651810E9E10083D297 /* ViewController.m */,
 				723200671810E9E10083D297 /* Images.xcassets */,
 				723200521810E9E10083D297 /* Supporting Files */,
+				72FDFA921811FAA8004536D6 /* MyTachoMeterParameters.h */,
+				72FDFA931811FAA8004536D6 /* MyTachoMeterParameters.m */,
 			);
 			path = TachoMeterDemo;
 			sourceTree = "<group>";
@@ -197,6 +205,8 @@
 				72FDFA8418117EF0004536D6 /* ShaderLoader.m */,
 				72FDFA8918118E7D004536D6 /* GLShapeDrawer.h */,
 				72FDFA8A18118E7D004536D6 /* GLShapeDrawer.m */,
+				72FDFA8F1811E059004536D6 /* Vector2.h */,
+				72FDFA901811E059004536D6 /* Vector2.m */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
@@ -300,10 +310,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				72FDFA8518117EF0004536D6 /* ShaderLoader.m in Sources */,
+				72FDFA911811E059004536D6 /* Vector2.m in Sources */,
 				72AEC5A3181115ED00A9F656 /* TachoMeterRenderere.m in Sources */,
 				723200661810E9E10083D297 /* ViewController.m in Sources */,
 				72FDFA8B18118E7D004536D6 /* GLShapeDrawer.m in Sources */,
 				7232005C1810E9E10083D297 /* AppDelegate.m in Sources */,
+				72FDFA941811FAA8004536D6 /* MyTachoMeterParameters.m in Sources */,
 				723200871810ED430083D297 /* NYGLKView.m in Sources */,
 				72FDFA8E181190D0004536D6 /* GLColor.m in Sources */,
 				72FDFA8818118BB8004536D6 /* FloatArray.m in Sources */,

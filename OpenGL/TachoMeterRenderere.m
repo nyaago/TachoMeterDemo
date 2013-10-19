@@ -48,7 +48,7 @@ GLuint _vertexBuffer;
 #define VERTEX_ATTRIB_SIZE 8
 
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
-#define CIRCLE_DIVIDES 150
+#define CIRCLE_DIVIDES 250
 
 // Uniform index.
 enum
@@ -74,7 +74,6 @@ enum
     self.view = view;
     self.shaderLoader = [[ShaderLoader alloc] init];
     self.shapeDrawer = [[GLShapeDrawer alloc] init];
-    self.vertexs = [[FloatArray alloc] initWithCount:[self vertexArraySize]];
   }
   return self;
 }
@@ -84,6 +83,7 @@ enum
 - (void)setupGL
 {
   [self loadShaders];
+  self.vertexs = [[FloatArray alloc] initWithCount:[self vertexArraySize]];
   [self setFrameVertex];
   
   self.effect = [[GLKBaseEffect alloc] init];
@@ -236,9 +236,37 @@ enum
   [self.shapeDrawer fillCircleVertex:self.vertexs x:0 y:0
                               radius:self.meterRadius divides:CIRCLE_DIVIDES
                                color:self.inactiveMeterColor stride:VERTEX_ATTRIB_SIZE];
-  [self.shapeDrawer fillCircleVertex:self.vertexs x:0 y:0
-                              radius:self.meterRadius divides:CIRCLE_DIVIDES
-                               color:self.inactiveMeterColor stride:VERTEX_ATTRIB_SIZE];
+  [self.shapeDrawer drawCircleVertex:self.vertexs x:0 y:0
+                              radius:self.meterScaleLineRadius
+                             divides:CIRCLE_DIVIDES
+                           drawRatio:3.0f / 4.0f
+                               color:self.largeScaleColor
+                           lineWidth:self.lineWidth
+                              stride:VERTEX_ATTRIB_SIZE];
+  [self.shapeDrawer drawLineInCircleVertex:self.vertexs x:0 y:0
+                                    radius:self.meterScaleCircleRadius
+                                   divides:(self.parameters.maxValue - self.parameters.minValue)
+                                            / self.parameters.scale
+                                lineLength:self.scaleLength 
+                                 drawRatio:3.0f / 4.0f color:self.scaleColor
+                                 lineWidth:self.lineWidth
+                                    stride:VERTEX_ATTRIB_SIZE];
+  [self.shapeDrawer drawLineInCircleVertex:self.vertexs x:0 y:0
+                                    radius:self.meterScaleLineRadius
+                                   divides:(self.parameters.maxValue - self.parameters.minValue)
+                                            / self.parameters.mediumScale
+                                lineLength:self.medimuScaleLength
+                                 drawRatio:3.0f / 4.0f color:self.scaleColor
+                                 lineWidth:self.lineWidth
+                                    stride:VERTEX_ATTRIB_SIZE];
+  [self.shapeDrawer drawLineInCircleVertex:self.vertexs x:0 y:0
+                                    radius:self.meterScaleLineRadius
+                                   divides:(self.parameters.maxValue - self.parameters.minValue)
+                                            / self.parameters.largeScale
+                                lineLength:self.largeScaleLength
+                                 drawRatio:3.0f / 4.0f color:self.scaleColor
+                                 lineWidth:self.lineWidth
+                                    stride:VERTEX_ATTRIB_SIZE];
 }
 
 - (void) setDefault {
@@ -255,10 +283,23 @@ enum
   self.scaleColor = [[GLColor alloc] initWithRed:0 green:0 blue:0];
   self.largeScaleColor = [[GLColor alloc] initWithRed:255 green:0 blue:0];
   self.redColor = [[GLColor alloc] initWithRed:255 green:0 blue:0];
+  
+  self.lineWidth = 1.0f;
+  
+  self.scaleLength = 0.04f;
+  self.medimuScaleLength = 0.04f;
+  self.largeScaleLength = 0.1f;
 }
 
 - (NSInteger) vertexCount {
-  return [self.shapeDrawer vertexCountOfFillCircle:CIRCLE_DIVIDES] * 3;
+  return [self.shapeDrawer vertexCountOfFillCircle:CIRCLE_DIVIDES] * 3
+  + [self.shapeDrawer vertexCountOfDrawCircle:CIRCLE_DIVIDES]
+  + [self.shapeDrawer vertexCountOfDrawLineInCircle:
+     (self.parameters.maxValue - self.parameters.minValue) / self.parameters.scale ]
+  + [self.shapeDrawer vertexCountOfDrawLineInCircle:
+     (self.parameters.maxValue - self.parameters.minValue) / self.parameters.mediumScale ]
+  + [self.shapeDrawer vertexCountOfDrawLineInCircle:
+     (self.parameters.maxValue - self.parameters.minValue) / self.parameters.largeScale];
 }
 
 - (NSInteger) vertexArraySize {

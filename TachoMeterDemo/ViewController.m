@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "TachoMeterRenderere.h"
-
+#import "MyTachoMeterParameters.h"
 @interface ViewController () {
 }
 @end
@@ -21,7 +21,9 @@
   CGRect frame = self.view.bounds;
   CGRect rect = CGRectMake(0, 0, frame.size.height / 2, frame.size.height / 2);
   _tachoMeterView = [[NYGLKView alloc] initWithFrame:rect];
-  _tachoMeterView.renderer = [[TachoMeterRenderere alloc] initWithView:_tachoMeterView];
+  TachoMeterRenderere *renderer = [[TachoMeterRenderere alloc] initWithView:_tachoMeterView];
+  _tachoMeterView.renderer = renderer;
+  renderer.parameters = [[MyTachoMeterParameters alloc] init];
   [self.view addSubview:_tachoMeterView];
 /*
   rect = CGRectMake(0, frame.size.height / 2, frame.size.height / 2, frame.size.height / 2);
