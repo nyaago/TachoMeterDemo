@@ -319,7 +319,24 @@ enum
                                  drawRatio:3.0f / 4.0f color:self.scaleColor
                                  lineWidth:self.lineWidth
                                     stride:VERTEX_ATTRIB_SIZE];
+  CGFloat startRadian = [self.shapeDrawer
+                         getRadianForCircleWithIndex:self.parameters.redZoneValue
+                         divides:self.parameters.maxValue - self.parameters.minValue
+                         drawRatio:3.0f / 4.0f];
+  CGFloat endRadian = [self.shapeDrawer
+                       getRadianForCircleWithIndex:self.parameters.maxValue
+                       divides:self.parameters.maxValue - self.parameters.minValue
+                       drawRatio:3.0f / 4.0f];
 
+  [self.shapeDrawer fillTorusVertex:self.vertexs
+                                  x:0 y:0
+                             radius:self.meterScaleCircleRadius
+                        innerRadius:self.meterScaleCircleRadius - self.scaleLength
+                            divides:200
+                         startAngle:startRadian
+                           endAngle:endRadian
+                              color:self.redColor
+                             stride:VERTEX_ATTRIB_SIZE];
   
 }
 
@@ -658,7 +675,7 @@ enum
                        nil];
   
   self.noteText = @"note";
-  self.value = [NSNumber numberWithInt:123];
+  self.value = [NSNumber numberWithInt:4000];
   self.valueBackgroundColor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f];
 }
 
@@ -690,6 +707,16 @@ enum
 }
 
 - (NSInteger) frameVertextCount {
+  
+  CGFloat startRadian = [self.shapeDrawer
+                    getRadianForCircleWithIndex:self.parameters.redZoneValue
+                    divides:self.parameters.maxValue - self.parameters.minValue
+                    drawRatio:3.0f / 4.0f];
+  CGFloat endRadian = [self.shapeDrawer
+                         getRadianForCircleWithIndex:self.parameters.maxValue
+                         divides:self.parameters.maxValue - self.parameters.minValue
+                         drawRatio:3.0f / 4.0f];
+
   return [self.shapeDrawer vertexCountOfFillCircle:CIRCLE_DIVIDES] * 3
   + [self.shapeDrawer vertexCountOfDrawCircle:CIRCLE_DIVIDES]
   + [self.shapeDrawer vertexCountOfDrawLineInCircle:
@@ -697,7 +724,9 @@ enum
   + [self.shapeDrawer vertexCountOfDrawLineInCircle:
      (self.parameters.maxValue - self.parameters.minValue) / self.parameters.mediumScale ]
   + [self.shapeDrawer vertexCountOfDrawLineInCircle:
-     (self.parameters.maxValue - self.parameters.minValue) / self.parameters.largeScale];
+     (self.parameters.maxValue - self.parameters.minValue) / self.parameters.largeScale]
+  + [self.shapeDrawer vertexCountOfFillTorusWithDivides:CIRCLE_DIVIDES
+                                             startAngle:startRadian endAngle:endRadian];
   
 }
 

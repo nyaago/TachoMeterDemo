@@ -133,10 +133,41 @@
                        stride:(NSInteger)stride;
 
 
-/**
+/*!
  * @return 針を描画するための頂点数
  */
 - (NSInteger) vertexCountOfDrawNeedle;
+
+
+/*!
+ * 塗りつぶした円環面（ドーナツ型）の描画のための頂点設定
+ * @param array 頂点配列
+ * @param x 描画位置-x
+ * @param y 描画位置-y - 上がプラス
+ * @param radius 外側の半径
+ * @param innerRadius 内側の半径
+ * @param startAngle 開始角度(radian)
+ * @param endAngle 終了角度(radian)
+ * @param divides 円の分割数（精度）
+ * @param color 色情報(a,r,g,b)
+ */
+- (NSInteger)fillTorusVertex:(FloatArray *)array
+                           x:(CGFloat)x y:(CGFloat)y
+                      radius:(CGFloat)radius
+                 innerRadius:(CGFloat)innerRadius
+                     divides:(NSInteger)divides
+                  startAngle:(CGFloat)startAngle
+                    endAngle:(CGFloat)endAngle
+                       color:(GLColor *)color
+                      stride:(NSInteger)stride;
+
+
+/*!
+ @return 塗りつぶした円環面（ドーナツ型）の描画のための頂点数
+ */
+- (NSInteger)vertexCountOfFillTorusWithDivides:(NSInteger)divides
+                                    startAngle:(CGFloat)startAngle endAngle:(CGFloat)endAngle;
+
 
 /*!
  * 角度(radian)と半径から円周上のY座標を得る

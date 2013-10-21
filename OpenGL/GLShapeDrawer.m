@@ -55,6 +55,10 @@
  */
 - (void) drawNeedle:(GLShapeDrawerInfo *)info;
 
+/*!
+ * 頂点設定済みの 塗りつぶした円環面（ドーナツ型）の描画
+ */
+- (void)fillTorus:(GLShapeDrawerInfo *)info;
 @end
 
 
@@ -85,7 +89,8 @@ enum {
   FILL_CIRCLE,
   DRAW_CIRCLE,
   DRAW_LINE_IN_CIRCLE,
-  DRAW_NEEDLE_IN_CIRCLE
+  DRAW_NEEDLE_IN_CIRCLE,
+  FILL_TORUS
 };
 
 
@@ -112,6 +117,10 @@ enum {
         break;
       case DRAW_NEEDLE_IN_CIRCLE :
         [self drawNeedle:info];
+        break;
+      case FILL_TORUS :
+        [self fillTorus:info];
+        break;
       default:
         break;
     }
@@ -346,6 +355,54 @@ enum {
   float angle = (float)(2*M_PI*pos / (divides / drawnRatio));
   angle = angle - (float)(2*M_PI * ((drawnRatio - 0.5f) / 2.0f ));
   return angle;
+}
+
+
+- (NSInteger)fillTorusVertex:(FloatArray *)array
+                                  x:(CGFloat)x y:(CGFloat)y
+                             radius:(CGFloat)radius
+                        innerRadius:(CGFloat)innerRadius
+                            divides:(NSInteger)divides
+                         startAngle:(CGFloat)startAngle
+                           endAngle:(CGFloat)endAngle
+                              color:(GLColor *)color
+                             stride:(NSInteger)stride{
+  
+  int offset = array.position;
+  int newDevides = (int)(abs(endAngle - startAngle) / (2*M_PI) * divides);
+  int length = newDevides + 1 ;// 頂点数
+
+  CGFloat angle = startAngle;
+  CGFloat step = (endAngle - startAngle) / newDevides ;
+  
+  for (int i=0;i< length;i++) {
+    [array putValue:(float)( x+cos(angle) * radius)];
+    [array putValue:(float)( y+sin(angle) * radius)];
+    [array putValue:(float)0];
+    [array putValues:[color rgbArray] count:3];
+    [array advancePosition:2];
+    
+    [array putValue:(float)( x+cos(angle) * innerRadius)];
+    [array putValue:(float)( y+sin(angle) * innerRadius)];
+    [array putValue:(float)0];
+    [array putValues:[color rgbArray] count:3];
+    [array advancePosition:2];
+    angle += step;
+  }
+  [self.elements addObject:[[GLShapeDrawerInfo alloc]
+                            init:FILL_TORUS offset:offset / stride count:length * 2
+                            lineWidth:0]];
+  return array.position;
+}
+
+- (NSInteger)vertexCountOfFillTorusWithDivides:(NSInteger)divides
+                                    startAngle:(CGFloat)startAngle endAngle:(CGFloat)endAngle {
+  return (int)(abs(endAngle - startAngle) / (2*M_PI) * divides + 1) * 2;
+}
+
+- (void)fillTorus:(GLShapeDrawerInfo *)info {
+  glDrawArrays(GL_TRIANGLE_STRIP,info.offset,info.count);
+
 }
 
 
