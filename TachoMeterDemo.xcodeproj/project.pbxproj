@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		721D6DAF1814BB62005121AC /* TextImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 721D6DAE1814BB62005121AC /* TextImage.m */; };
+		721D6DB21814CD28005121AC /* TextureShader.fsh in Sources */ = {isa = PBXBuildFile; fileRef = 721D6DB01814CD28005121AC /* TextureShader.fsh */; };
+		721D6DB31814CD28005121AC /* TextureShader.vsh in Sources */ = {isa = PBXBuildFile; fileRef = 721D6DB11814CD28005121AC /* TextureShader.vsh */; };
+		721D6DB41814D227005121AC /* TextureShader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 721D6DB01814CD28005121AC /* TextureShader.fsh */; };
+		721D6DB51814D227005121AC /* TextureShader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 721D6DB11814CD28005121AC /* TextureShader.vsh */; };
 		723200481810E9E10083D297 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 723200471810E9E10083D297 /* Foundation.framework */; };
 		7232004A1810E9E10083D297 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 723200491810E9E10083D297 /* CoreGraphics.framework */; };
 		7232004C1810E9E10083D297 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7232004B1810E9E10083D297 /* UIKit.framework */; };
@@ -45,6 +50,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		721D6DAD1814BB62005121AC /* TextImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextImage.h; sourceTree = "<group>"; };
+		721D6DAE1814BB62005121AC /* TextImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextImage.m; sourceTree = "<group>"; };
+		721D6DB01814CD28005121AC /* TextureShader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = TextureShader.fsh; path = Shaders/TextureShader.fsh; sourceTree = "<group>"; };
+		721D6DB11814CD28005121AC /* TextureShader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = TextureShader.vsh; path = Shaders/TextureShader.vsh; sourceTree = "<group>"; };
 		723200441810E9E10083D297 /* TachoMeterDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TachoMeterDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		723200471810E9E10083D297 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		723200491810E9E10083D297 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -147,6 +156,8 @@
 		723200511810E9E10083D297 /* TachoMeterDemo */ = {
 			isa = PBXGroup;
 			children = (
+				721D6DB01814CD28005121AC /* TextureShader.fsh */,
+				721D6DB11814CD28005121AC /* TextureShader.vsh */,
 				7232005A1810E9E10083D297 /* AppDelegate.h */,
 				7232005B1810E9E10083D297 /* AppDelegate.m */,
 				723200601810E9E10083D297 /* Shader.fsh */,
@@ -193,6 +204,8 @@
 		723200841810ECC80083D297 /* OpenGL */ = {
 			isa = PBXGroup;
 			children = (
+				721D6DAD1814BB62005121AC /* TextImage.h */,
+				721D6DAE1814BB62005121AC /* TextImage.m */,
 				72FDFA8C181190D0004536D6 /* GLColor.h */,
 				72FDFA8D181190D0004536D6 /* GLColor.m */,
 				72FDFA8618118BB8004536D6 /* FloatArray.h */,
@@ -287,6 +300,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				721D6DB41814D227005121AC /* TextureShader.fsh in Resources */,
+				721D6DB51814D227005121AC /* TextureShader.vsh in Resources */,
 				723200631810E9E10083D297 /* Shader.vsh in Resources */,
 				723200681810E9E10083D297 /* Images.xcassets in Resources */,
 				723200611810E9E10083D297 /* Shader.fsh in Resources */,
@@ -316,9 +331,12 @@
 				72FDFA8B18118E7D004536D6 /* GLShapeDrawer.m in Sources */,
 				7232005C1810E9E10083D297 /* AppDelegate.m in Sources */,
 				72FDFA941811FAA8004536D6 /* MyTachoMeterParameters.m in Sources */,
+				721D6DB21814CD28005121AC /* TextureShader.fsh in Sources */,
+				721D6DB31814CD28005121AC /* TextureShader.vsh in Sources */,
 				723200871810ED430083D297 /* NYGLKView.m in Sources */,
 				72FDFA8E181190D0004536D6 /* GLColor.m in Sources */,
 				72FDFA8818118BB8004536D6 /* FloatArray.m in Sources */,
+				721D6DAF1814BB62005121AC /* TextImage.m in Sources */,
 				723200581810E9E10083D297 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

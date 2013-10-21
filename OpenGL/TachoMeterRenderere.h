@@ -50,11 +50,28 @@
 @property (nonatomic, strong) GLColor *largeScaleColor;
 @property (nonatomic, strong) GLColor *redColor;
 
+@property (nonatomic, strong) UIColor *scaleTextColor;
+@property (nonatomic, strong) UIColor *valueTextColor;
+@property (nonatomic, strong) UIColor *noteTextColor;
+@property (nonatomic, strong) UIColor *valueBackgroundColor;
+
+
 @property (nonatomic) CGFloat scaleLength;
 @property (nonatomic) CGFloat medimuScaleLength;
 @property (nonatomic) CGFloat largeScaleLength;
 
+@property (nonatomic) CGFloat scaleTextSize;
+@property (nonatomic) CGFloat valueTextSize;
+@property (nonatomic) CGFloat noteTextSize;
+
+@property (nonatomic) UIFont *scaleTextFont;
+@property (nonatomic) UIFont *valueTextFont;
+@property (nonatomic) UIFont *noteTextFont;
+
 @property (nonatomic, strong) NSObject <TachoMeterParameters>  *parameters;
+
+@property (nonatomic, strong) NSString *noteText;
+@property (nonatomic, strong) NSNumber *value;
 
 
 - (id) initWithView:(GLKView *)view;

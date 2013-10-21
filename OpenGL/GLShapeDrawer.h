@@ -92,4 +92,32 @@
 */
 - (NSInteger) vertexCountOfDrawLineInCircle:(NSInteger)divides;
 
+
+/*!
+ * 角度(radian)と半径から円周上のY座標を得る
+ * @param rarian
+ * @param radius
+ * @return 円周上のY座標
+ */
+- (CGFloat) getYOfCircleWithRadian:(CGFloat)rarian radius:(CGFloat)radius;
+
+/*!
+ * 角度(radian)と半径から円周上のX座標を得る
+ * @param rarian
+ * @param radius
+ * @return 円周上のX座標
+ */
+- (CGFloat) getXOfCircleWithRadian:(CGFloat)rarian radius:(CGFloat)radius;
+
+
+/*!
+ * 円上の位置に値を割当るときの各値の角度を得る.
+ * @param i 0起点のインデックス
+ * @param divides  円の分割数=値の範囲の大きさ
+ * @param drawnRatio  線が描画される領域-全体の内の比率、 > 0, <= 1.0f
+ * @return 角度（ラジアン）
+ */
+- (CGFloat) getRadianForCircleWithIndex:(NSInteger) i  divides:(NSInteger)divides
+                              drawRatio:(CGFloat)drawnRatio;
+
 @end
