@@ -50,6 +50,11 @@
  */
 - (void) drawLineInCircle:(GLShapeDrawerInfo *)info;
 
+/*!
+ * 頂点設定済みの針の描画
+ */
+- (void) drawNeedle:(GLShapeDrawerInfo *)info;
+
 @end
 
 
@@ -105,6 +110,8 @@ enum {
       case DRAW_LINE_IN_CIRCLE :
         [self drawLineInCircle:info];
         break;
+      case DRAW_NEEDLE_IN_CIRCLE :
+        [self drawNeedle:info];
       default:
         break;
     }
@@ -235,6 +242,101 @@ enum {
     glDrawArrays(GL_LINE_STRIP, info.offset + i, 2);
 
   }
+}
+
+- (NSInteger)drawNeedleVertex:(FloatArray *)array
+                              value:(NSInteger)value
+                                  x:(CGFloat)x y:(CGFloat)y
+                             radius:(CGFloat)radius
+                            divides:(NSInteger)divides
+                         lineLength:(CGFloat)lineLength
+                         coreLength:(CGFloat)coreLength
+                          drawRatio:(CGFloat)drawRatio
+                              colors:(NSArray *)colors
+                          lineWidth:(CGFloat)lineWidth
+                             stride:(NSInteger)stride{
+  int offset = array.position;
+  
+  float vertexes[][3] = { {lineLength ,0.0f,0.0f},
+    {-coreLength,-lineWidth / 2,0.0f},
+    {-coreLength,lineWidth /2,0.0f}
+  };
+  float angle=[self getRadianForCircleWithIndex:value divides:divides drawRatio:drawRatio];
+
+  for(int i = 0; i < 3; ++i) {
+    float *p = vertexes[i];
+    Vector2 *vec = [[Vector2 alloc] initWithX:*p y:*(p+1)];
+    vec = [vec rotate:angle];
+    if(x != 0 && y != 0) {
+      vec = [vec translateX:x y:y];
+    }
+    [array putValues:[vec xyz] count:3];
+    GLColor *color;
+    if([colors count] > i) {
+      color = [colors objectAtIndex:i];
+    }
+    else {
+      color = [colors lastObject];
+    }
+    [array putValues:[color rgbArray] count:3];
+    [array advancePosition:stride > (3+3) ? (stride - (3 + 3)) : 0 ];
+  }
+  [self.elements addObject:[[GLShapeDrawerInfo alloc]
+                            init:DRAW_NEEDLE_IN_CIRCLE offset:offset / stride count:3
+                            lineWidth:lineWidth]];
+
+  return array.position;
+}
+
+- (NSInteger)drawNeedleVertexUpdate:(FloatArray *)array
+                        value:(NSInteger)value
+                            x:(CGFloat)x y:(CGFloat)y
+                       radius:(CGFloat)radius
+                      divides:(NSInteger)divides
+                   lineLength:(CGFloat)lineLength
+                   coreLength:(CGFloat)coreLength
+                    drawRatio:(CGFloat)drawRatio
+                       colors:(NSArray *)colors
+                    lineWidth:(CGFloat)lineWidth
+                       stride:(NSInteger)stride{
+  int offset = array.position;
+  
+  float vertexes[][3] = { {lineLength ,0.0f,0.0f},
+    {-coreLength,-lineWidth / 2,0.0f},
+    {-coreLength,lineWidth /2,0.0f}
+  };
+  float angle=[self getRadianForCircleWithIndex:value divides:divides drawRatio:drawRatio];
+  
+  for(int i = 0; i < 3; ++i) {
+    float *p = vertexes[i];
+    Vector2 *vec = [[Vector2 alloc] initWithX:*p y:*(p+1)];
+    vec = [vec rotate:angle];
+    if(x != 0 && y != 0) {
+      vec = [vec translateX:x y:y];
+    }
+    [array putValues:[vec xyz] count:3];
+    GLColor *color;
+    if([colors count] > i) {
+      color = [colors objectAtIndex:i];
+    }
+    else {
+      color = [colors lastObject];
+    }
+    [array putValues:[color rgbArray] count:3];
+    [array advancePosition:stride > (3+3) ? (stride - (3 + 3)) : 0 ];
+  }
+  
+  return array.position;
+}
+
+
+
+- (NSInteger) vertexCountOfDrawNeedle {
+  return 3;
+}
+
+- (void) drawNeedle:(GLShapeDrawerInfo *)info {
+  glDrawArrays(GL_TRIANGLE_STRIP, info.offset, 3);
 }
 
 

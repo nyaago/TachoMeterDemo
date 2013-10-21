@@ -67,6 +67,7 @@
 
 /**
  * 円の内側に目盛り線を引く
+ * @param array 頂点を設定する配列
  * @param x 描画位置-x
  * @param y 描画位置-y - 上がプラス
  * @param lineLength ラインの長さ
@@ -74,6 +75,7 @@
  * @param divides 円の分割数（精度）
  * @param drawnRatio 線が描画される領域-全体の内の比率、 > 0, <= 1.0f
  * @param color 色情報(a,r,g,b)
+ * @param stride
  */
 - (NSInteger)drawLineInCircleVertex:(FloatArray *)array
                                   x:(CGFloat)x y:(CGFloat)y
@@ -92,6 +94,49 @@
 */
 - (NSInteger) vertexCountOfDrawLineInCircle:(NSInteger)divides;
 
+
+/**
+ * 針描画の頂点設定
+ * @param array 頂点を設定する配列
+ * @param value
+ * @param x 描画位置-x
+ * @param y 描画位置-y - 上がプラス
+ * @param lineLength ラインの長さ
+ * @param coreLength ラインの長さ
+ * @param radius 半径
+ * @param divides 円の分割数（精度）
+ * @param drawnRatio 線が描画される領域-全体の内の比率、 > 0, <= 1.0f
+ * @param colors GLColorを要素とする
+ * @param stride
+ */
+- (NSInteger)drawNeedleVertex:(FloatArray *)array
+                        value:(NSInteger)value
+                            x:(CGFloat)x y:(CGFloat)y
+                       radius:(CGFloat)radius
+                      divides:(NSInteger)divides
+                   lineLength:(CGFloat)lineLength
+                   coreLength:(CGFloat)coreLength
+                    drawRatio:(CGFloat)drawRatio
+                        colors:(NSArray *)colors
+                    lineWidth:(CGFloat)lineWidth
+                       stride:(NSInteger)stride;
+- (NSInteger)drawNeedleVertexUpdate:(FloatArray *)array
+                        value:(NSInteger)value
+                            x:(CGFloat)x y:(CGFloat)y
+                       radius:(CGFloat)radius
+                      divides:(NSInteger)divides
+                   lineLength:(CGFloat)lineLength
+                   coreLength:(CGFloat)coreLength
+                    drawRatio:(CGFloat)drawRatio
+                       colors:(NSArray *)colors
+                    lineWidth:(CGFloat)lineWidth
+                       stride:(NSInteger)stride;
+
+
+/**
+ * @return 針を描画するための頂点数
+ */
+- (NSInteger) vertexCountOfDrawNeedle;
 
 /*!
  * 角度(radian)と半径から円周上のY座標を得る

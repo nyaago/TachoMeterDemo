@@ -22,6 +22,8 @@ float _rotation;
 
 GLuint _vertexArray;
 GLuint _vertexBuffer;
+  
+NSInteger _needlePosition;
 
 }
 
@@ -91,6 +93,8 @@ enum
   [self loadTextureShaders];
   self.vertexs = [[FloatArray alloc] initWithCount:[self vertexArraySize]];
   [self setFrameVertex];
+  [self setValueVertex];
+  [self setOtherVertex];
   
   self.effect = [[GLKBaseEffect alloc] init];
   self.effect.light0.enabled = GL_TRUE;
@@ -196,6 +200,7 @@ enum
   glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, _normalMatrix.m);
   
 //  glDrawArrays(GL_TRIANGLE_STRIP, 0, 36);
+  [self updateValueVertex];
   [self.shapeDrawer drawArrays];
   
   // 文字
@@ -314,7 +319,51 @@ enum
                                  drawRatio:3.0f / 4.0f color:self.scaleColor
                                  lineWidth:self.lineWidth
                                     stride:VERTEX_ATTRIB_SIZE];
+
   
+}
+
+- (void) setOtherVertex {
+  [self.shapeDrawer fillCircleVertex:self.vertexs x:0 y:0
+                              radius:self.centerRadius divides:CIRCLE_DIVIDES
+                               color:self.centerColor stride:VERTEX_ATTRIB_SIZE];
+}
+
+
+- (void) setValueVertex {
+ 
+  _needlePosition = self.vertexs.position;
+  [self.shapeDrawer drawNeedleVertex:self.vertexs
+                               value:[self.value integerValue]
+                                   x:0 y:0
+                              radius:1
+                             divides:self.parameters.maxValue - self.parameters.minValue
+                          lineLength:self.needLength
+                          coreLength:self.needCoreLength
+                           drawRatio:3.0f/4.0f
+                               colors:self.needleColors
+                           lineWidth:self.needleWeight
+                              stride:VERTEX_ATTRIB_SIZE];
+}
+
+- (void) updateValueVertex {
+  [self.vertexs setPosition:_needlePosition];
+  [self.shapeDrawer drawNeedleVertexUpdate:self.vertexs
+                               value:[self.value integerValue]
+                                   x:0 y:0
+                              radius:1
+                             divides:self.parameters.maxValue - self.parameters.minValue
+                          lineLength:self.needLength
+                          coreLength:self.needCoreLength
+                           drawRatio:3.0f/4.0f
+                              colors:self.needleColors
+                           lineWidth:self.needleWeight
+                              stride:VERTEX_ATTRIB_SIZE];
+  glBufferSubData(GL_ARRAY_BUFFER,
+                  sizeof(CGFloat) * _needlePosition,
+                  4 * VERTEX_ATTRIB_SIZE * sizeof(CGFloat),
+                  _vertexs.array + _needlePosition);
+
   
 }
 
@@ -571,14 +620,15 @@ enum
   self.meterRadius = 0.96f;
   self.meterScaleCircleRadius = 0.94;
   self.meterScaleLineRadius = 0.87f;
+  self.centerRadius = 0.15f;
   
   self.frameColor = [[GLColor alloc] initWithRed:191.0/255.0 green:191.0/255 blue:191.0/255];
   self.activeMeterColor = [[GLColor alloc] initWithRed:255 green:255 blue:255];
-  self.inactiveMeterColor = [[GLColor alloc] initWithRed:127 green:127 blue:127];
-  self.centerColor = [[GLColor alloc] initWithRed:31 green:31 blue:31];
+  self.inactiveMeterColor = [[GLColor alloc] initWithRed:127.0/255.0 green:127.0/255.0 blue:127/255.0];
+  self.centerColor = [[GLColor alloc] initWithRed:31.0f/255.0 green:31.0/255.0 blue:31.0/255.0];
   self.scaleColor = [[GLColor alloc] initWithRed:0 green:0 blue:0];
-  self.largeScaleColor = [[GLColor alloc] initWithRed:255 green:0 blue:0];
-  self.redColor = [[GLColor alloc] initWithRed:255 green:0 blue:0];
+  self.largeScaleColor = [[GLColor alloc] initWithRed:255.0/255.0 green:0/255.0 blue:0/255.0];
+  self.redColor = [[GLColor alloc] initWithRed:255.0/255.0 green:0 blue:0];
   
   self.lineWidth = 1.0f;
   
@@ -597,6 +647,15 @@ enum
   self.scaleTextFont = [UIFont systemFontOfSize:14];
   self.noteTextFont = [UIFont systemFontOfSize:14];
   self.valueTextFont = [UIFont fontWithName:@"Verdana-Italic" size:15];
+  
+  self.needleWeight = 0.1f;
+  self.needLength = 0.85f;
+  self.needCoreLength = 0.25f;
+  self.needleColors = [NSArray arrayWithObjects:
+                       [[GLColor alloc] initWithRed:255.0f/255.0f green:0.0f/255.0f blue:0.0f/255.0f],
+                       [[GLColor alloc] initWithRed:255.0f/255.0f green:165.0f/255.0f blue:0.0f/255.0f],
+                       [[GLColor alloc] initWithRed:255.0f/255.0f green:0.0f/255.0f blue:0.0f/255.0f],
+                       nil];
   
   self.noteText = @"note";
   self.value = [NSNumber numberWithInt:123];
@@ -626,6 +685,7 @@ enum
 
 - (NSInteger) vertexCount {
   return [self frameVertextCount]
+  + 3  // 針
   + 4;  // texture
 }
 
@@ -647,7 +707,7 @@ enum
  */
 -(NSInteger) texturePositionInValueVertex {
   //
-  return [self frameVertextCount];
+  return [self frameVertextCount] + 3;
 }
 
 

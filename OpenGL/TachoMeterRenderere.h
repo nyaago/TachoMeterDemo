@@ -41,6 +41,7 @@
 @property (nonatomic) CGFloat meterScaleCircleRadius;
 @property (nonatomic) CGFloat meterScaleLineRadius;
 @property (nonatomic) CGFloat lineWidth;
+@property (nonatomic) CGFloat centerRadius;
 
 @property (nonatomic, strong) GLColor *frameColor;
 @property (nonatomic, strong) GLColor *activeMeterColor;
@@ -69,6 +70,15 @@
 @property (nonatomic) UIFont *noteTextFont;
 
 @property (nonatomic, strong) NSObject <TachoMeterParameters>  *parameters;
+
+@property (nonatomic) CGFloat needleWeight;
+@property (nonatomic) CGFloat needLength;
+@property (nonatomic) CGFloat needCoreLength;
+/*!
+ 針の色の配列 - 要素はGLColor
+ */
+@property (nonatomic, strong) NSArray *needleColors;
+
 
 @property (nonatomic, strong) NSString *noteText;
 @property (nonatomic, strong) NSNumber *value;
