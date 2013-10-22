@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <GLKit/GLKit.h>
+#import "MeterRenderer.h"
 #import "NYGLKView.h"
 #import "GLColor.h"
 
@@ -31,7 +32,8 @@
 
 
 
-@interface TachoMeterRenderere : NSObject <GLKViewDelegate, NYGLKRenferer>
+@interface TachoMeterRenderere : MeterRenderer <GLKViewDelegate, NYGLKRenferer>
+
 
 @property (nonatomic, strong) GLKBaseEffect *effect;
 @property (nonatomic, strong) GLKView *view;

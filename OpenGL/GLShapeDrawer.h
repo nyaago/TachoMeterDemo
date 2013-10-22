@@ -28,8 +28,11 @@
  * @param stride
  */
 - (NSInteger)fillCircleVertex:(FloatArray *)array
-                      x:(CGFloat)x y:(CGFloat)y radius:(CGFloat)radius
-                divides:(NSInteger)divides color:(GLColor *)color stride:(NSInteger)stride;
+                      x:(CGFloat)x y:(CGFloat)y
+                       radius:(CGFloat)radius
+                divides:(NSInteger)divides
+                        color:(GLColor *)color
+                       stride:(NSInteger)stride;
 
 /*!
  * @param divides  円の分割数（精度）
@@ -51,7 +54,8 @@
  */
 
 - (NSInteger)drawCircleVertex:(FloatArray *)array
-                            x:(CGFloat)x y:(CGFloat)y radius:(CGFloat)radius
+                            x:(CGFloat)x y:(CGFloat)y
+                       radius:(CGFloat)radius
                       divides:(NSInteger)divides
                     drawRatio:(CGFloat)drawRatio
                         color:(GLColor *)color
@@ -120,18 +124,6 @@
                         colors:(NSArray *)colors
                     lineWidth:(CGFloat)lineWidth
                        stride:(NSInteger)stride;
-- (NSInteger)drawNeedleVertexUpdate:(FloatArray *)array
-                        value:(NSInteger)value
-                            x:(CGFloat)x y:(CGFloat)y
-                       radius:(CGFloat)radius
-                      divides:(NSInteger)divides
-                   lineLength:(CGFloat)lineLength
-                   coreLength:(CGFloat)coreLength
-                    drawRatio:(CGFloat)drawRatio
-                       colors:(NSArray *)colors
-                    lineWidth:(CGFloat)lineWidth
-                       stride:(NSInteger)stride;
-
 
 /*!
  * @return 針を描画するための頂点数
@@ -166,8 +158,30 @@
  @return 塗りつぶした円環面（ドーナツ型）の描画のための頂点数
  */
 - (NSInteger)vertexCountOfFillTorusWithDivides:(NSInteger)divides
-                                    startAngle:(CGFloat)startAngle endAngle:(CGFloat)endAngle;
+                                    startAngle:(CGFloat)startAngle
+                                      endAngle:(CGFloat)endAngle;
 
+/*!
+* 長方形の塗りつぶし描画の頂点設定
+* @param array
+* @param left
+* @param top
+* @param right
+* @param bottom
+* @param color  色情報(a,r,g,b)
+* @param stride
+*/
+- (NSInteger) fillRectangle:(FloatArray *)array
+                       left:(CGFloat)left top:(CGFloat)top
+                      right:(CGFloat)right bottom:(CGFloat)bottom
+                      color:(GLColor *)color
+                     stride:(NSInteger)stride;
+
+
+/*!
+ * 長方形の塗りつぶし描画の頂点数
+ */
+- (NSInteger) vertexCOuntOfFillRectangle;
 
 /*!
  * 角度(radian)と半径から円周上のY座標を得る
@@ -176,6 +190,50 @@
  * @return 円周上のY座標
  */
 - (CGFloat) getYOfCircleWithRadian:(CGFloat)rarian radius:(CGFloat)radius;
+
+/*!
+ * 三角形の塗りつぶし描画の頂点設定
+ * @param array
+ * @param point1
+ * @param point2
+ * @param point3
+ * @param color  色情報(a,r,g,b)
+ * @param stride
+ */
+- (NSInteger) fillTriangle:(FloatArray *)array
+                    point1:(CGPoint)point1
+                    point2:(CGPoint)point2
+                    point3:(CGPoint)point3
+                     color:(GLColor *)color
+                    stride:(NSInteger)stride;
+
+/*!
+ * @return 三角形の塗りつぶし描画の頂点数
+ */
+- (NSInteger) vertexCOuntOfFillTriangle;
+
+
+/*!
+ 線描画の頂点設定
+ @param array
+ @param start
+ @param end
+ @param color
+ @param lineWidth
+ @param stride
+ */
+- (NSInteger) drawLineVertex:(FloatArray *)array
+                       start:(CGPoint)start
+                         end:(CGPoint)end
+                       color:(GLColor *)color
+                   lineWidth:(NSInteger)lineWidth
+                      stride:(NSInteger)stride;
+
+
+/*!
+ * @return 線描画の頂点数
+ */
+- (NSInteger) vertexCountOfDrawLine;
 
 /*!
  * 角度(radian)と半径から円周上のX座標を得る

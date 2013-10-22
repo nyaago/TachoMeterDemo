@@ -8,7 +8,9 @@
 
 #import "ViewController.h"
 #import "TachoMeterRenderere.h"
+#import "PeakMeterRenderer.h"
 #import "MyTachoMeterParameters.h"
+#import "MyPeakMeterParameters.h"
 @interface ViewController () {
 }
 @end
@@ -25,12 +27,14 @@
   _tachoMeterView.renderer = renderer;
   renderer.parameters = [[MyTachoMeterParameters alloc] init];
   [self.view addSubview:_tachoMeterView];
-/*
+
   rect = CGRectMake(0, frame.size.height / 2, frame.size.height / 2, frame.size.height / 2);
   _secondView = [[NYGLKView alloc] initWithFrame:rect];
-  _secondView.renderer = [[TachoMeterRenderere alloc] initWithView:_secondView];
+  PeakMeterRenderer *renderer2 = [[PeakMeterRenderer alloc] initWithView:_secondView];
+  _secondView.renderer = renderer2;
+  renderer2.parameters = [[MyPeakMeterParameters alloc] init];
+  
   [self.view addSubview:_secondView];
- */
 
 }
 

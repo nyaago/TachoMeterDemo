@@ -22,6 +22,8 @@
 - (id) init:(int)type offset:(NSInteger)offset count:(NSInteger)count;
 - (id) init:(int)type offset:(NSInteger)offset count:(NSInteger)count
   lineWidth:(NSInteger)lineWidth;
+
+
 @end
 
 
@@ -59,6 +61,22 @@
  * 頂点設定済みの 塗りつぶした円環面（ドーナツ型）の描画
  */
 - (void)fillTorus:(GLShapeDrawerInfo *)info;
+
+/*!
+ * 頂点設定済みの 塗りつぶした長方形の描画
+ */
+- (void) fillRectangle:(GLShapeDrawerInfo *)info;
+
+/*!
+ * 頂点設定済みの 塗りつぶした三角形の描画
+ */
+- (void) fillTriangle:(GLShapeDrawerInfo *)info;
+
+/*!
+ * 頂点設定済みの 線描画
+ */
+- (void) drawLine:(GLShapeDrawerInfo *)info;
+
 @end
 
 
@@ -81,6 +99,21 @@
   return self;
 }
 
+- (BOOL)isEqual:(id)anObject
+{
+  if (anObject == self) {
+    return YES;
+  }
+  if (!anObject || ![anObject isKindOfClass:[self class]]) {
+    return NO;
+  }
+  GLShapeDrawerInfo *other = (GLShapeDrawerInfo *)anObject;
+  if (self.offset == other.offset) {
+    return YES;
+  }
+  return NO;
+}
+
 @end
 
 @implementation GLShapeDrawer
@@ -90,7 +123,10 @@ enum {
   DRAW_CIRCLE,
   DRAW_LINE_IN_CIRCLE,
   DRAW_NEEDLE_IN_CIRCLE,
-  FILL_TORUS
+  FILL_TORUS,
+  FILL_RECTANGLE,
+  FILL_TRIANGLE,
+  DRAW_LINE
 };
 
 
@@ -120,6 +156,15 @@ enum {
         break;
       case FILL_TORUS :
         [self fillTorus:info];
+        break;
+      case FILL_RECTANGLE :
+        [self fillRectangle:info];
+        break;
+      case FILL_TRIANGLE :
+        [self fillTriangle:info];
+        break;
+      case DRAW_LINE :
+        [self drawLine:info];
         break;
       default:
         break;
@@ -290,55 +335,14 @@ enum {
     [array putValues:[color rgbArray] count:3];
     [array advancePosition:stride > (3+3) ? (stride - (3 + 3)) : 0 ];
   }
-  [self.elements addObject:[[GLShapeDrawerInfo alloc]
-                            init:DRAW_NEEDLE_IN_CIRCLE offset:offset / stride count:3
-                            lineWidth:lineWidth]];
-
-  return array.position;
-}
-
-- (NSInteger)drawNeedleVertexUpdate:(FloatArray *)array
-                        value:(NSInteger)value
-                            x:(CGFloat)x y:(CGFloat)y
-                       radius:(CGFloat)radius
-                      divides:(NSInteger)divides
-                   lineLength:(CGFloat)lineLength
-                   coreLength:(CGFloat)coreLength
-                    drawRatio:(CGFloat)drawRatio
-                       colors:(NSArray *)colors
-                    lineWidth:(CGFloat)lineWidth
-                       stride:(NSInteger)stride{
-  int offset = array.position;
-  
-  float vertexes[][3] = { {lineLength ,0.0f,0.0f},
-    {-coreLength,-lineWidth / 2,0.0f},
-    {-coreLength,lineWidth /2,0.0f}
-  };
-  float angle=[self getRadianForCircleWithIndex:value divides:divides drawRatio:drawRatio];
-  
-  for(int i = 0; i < 3; ++i) {
-    float *p = vertexes[i];
-    Vector2 *vec = [[Vector2 alloc] initWithX:*p y:*(p+1)];
-    vec = [vec rotate:angle];
-    if(x != 0 && y != 0) {
-      vec = [vec translateX:x y:y];
-    }
-    [array putValues:[vec xyz] count:3];
-    GLColor *color;
-    if([colors count] > i) {
-      color = [colors objectAtIndex:i];
-    }
-    else {
-      color = [colors lastObject];
-    }
-    [array putValues:[color rgbArray] count:3];
-    [array advancePosition:stride > (3+3) ? (stride - (3 + 3)) : 0 ];
+  GLShapeDrawerInfo *info = [[GLShapeDrawerInfo alloc]
+                             init:DRAW_NEEDLE_IN_CIRCLE offset:offset / stride count:3
+                             lineWidth:lineWidth];
+  if([self.elements containsObject:info] == NO) {
+    [self.elements addObject:info];
   }
-  
   return array.position;
 }
-
-
 
 - (NSInteger) vertexCountOfDrawNeedle {
   return 3;
@@ -380,13 +384,13 @@ enum {
     [array putValue:(float)( y+sin(angle) * radius)];
     [array putValue:(float)0];
     [array putValues:[color rgbArray] count:3];
-    [array advancePosition:2];
+    [array advancePosition:stride > (3+3) ? (stride - (3 + 3)) : 0 ];
     
     [array putValue:(float)( x+cos(angle) * innerRadius)];
     [array putValue:(float)( y+sin(angle) * innerRadius)];
     [array putValue:(float)0];
     [array putValues:[color rgbArray] count:3];
-    [array advancePosition:2];
+    [array advancePosition:stride > (3+3) ? (stride - (3 + 3)) : 0 ];
     angle += step;
   }
   [self.elements addObject:[[GLShapeDrawerInfo alloc]
@@ -396,7 +400,9 @@ enum {
 }
 
 - (NSInteger)vertexCountOfFillTorusWithDivides:(NSInteger)divides
-                                    startAngle:(CGFloat)startAngle endAngle:(CGFloat)endAngle {
+                                    startAngle:(CGFloat)startAngle
+                                      endAngle:(CGFloat)endAngle {
+  
   return (int)(abs(endAngle - startAngle) / (2*M_PI) * divides + 1) * 2;
 }
 
@@ -405,6 +411,123 @@ enum {
 
 }
 
+
+- (NSInteger) fillRectangle:(FloatArray *)array
+                       left:(CGFloat)left top:(CGFloat)top
+                      right:(CGFloat)right bottom:(CGFloat)bottom
+                      color:(GLColor *)color
+                     stride:(NSInteger)stride
+{
+  NSInteger offset = array.position;
+  CGFloat vertexs[][3] = {
+    {left, top, 0},
+    {right, top, 0},
+    {left, bottom, 0},
+    {right, bottom, 0}
+  };
+  
+  for(int i = 0; i < 4; ++i) {
+    CGFloat *p = vertexs[i];
+    [array putValues:p  count:3];
+    [array putValues:[color rgbArray] count:3];
+    [array advancePosition:stride > (3+3) ? (stride - (3 + 3)) : 0 ];
+  }
+  GLShapeDrawerInfo *info = [[GLShapeDrawerInfo alloc]
+                             init:FILL_RECTANGLE offset:offset / stride count:4
+                             lineWidth:0];
+  if([self.elements containsObject:info] == NO) {
+    [self.elements addObject:info];
+  }
+  return array.position;
+
+}
+
+- (NSInteger) vertexCOuntOfFillRectangle {
+  return 4;
+}
+
+- (void) fillRectangle:(GLShapeDrawerInfo *)info {
+  glDrawArrays(GL_TRIANGLE_STRIP, info.offset, info.count);
+}
+
+
+- (NSInteger) fillTriangle:(FloatArray *)array
+                    point1:(CGPoint)point1
+                    point2:(CGPoint)point2
+                    point3:(CGPoint)point3
+                      color:(GLColor *)color
+                    stride:(NSInteger)stride {
+
+  NSInteger offset = array.position;
+  CGPoint points[] = {
+    point1, point2, point3
+  };
+  
+  for(int i = 0; i < 3; ++i) {
+    CGPoint point = points[i];
+    [array putValue:point.x];
+    [array putValue:point.y];
+    [array putValue:0.0f];
+    [array putValues:[color rgbArray] count:3];
+    [array advancePosition:stride > (3+3) ? (stride - (3 + 3)) : 0 ];
+  }
+  GLShapeDrawerInfo *info = [[GLShapeDrawerInfo alloc]
+                             init:FILL_TRIANGLE offset:offset / stride count:3
+                             lineWidth:0];
+  if([self.elements containsObject:info] == NO) {
+    [self.elements addObject:info];
+  }
+  return array.position;
+ 
+}
+
+- (NSInteger) vertexCOuntOfFillTriangle {
+  return 3;
+}
+
+- (void) fillTriangle:(GLShapeDrawerInfo *)info {
+  glDrawArrays(GL_TRIANGLE_STRIP, info.offset, info.count);
+}
+
+
+- (NSInteger) drawLineVertex:(FloatArray *)array
+                    start:(CGPoint)start
+                      end:(CGPoint)end
+                     color:(GLColor *)color
+             lineWidth:(NSInteger)lineWidth
+                    stride:(NSInteger)stride {
+  
+  NSInteger offset = array.position;
+
+  CGPoint points[] = {
+    start, end
+  };
+  
+  for(int i = 0; i < 2; ++i) {
+    CGPoint point = points[i];
+    [array putValue:point.x];
+    [array putValue:point.y];
+    [array putValue:0.0f];
+    [array putValues:[color rgbArray] count:3];
+    [array advancePosition:stride > (3+3) ? (stride - (3 + 3)) : 0 ];
+  }
+  GLShapeDrawerInfo *info = [[GLShapeDrawerInfo alloc]
+                             init:DRAW_LINE offset:offset / stride count:2
+                             lineWidth:0];
+  if([self.elements containsObject:info] == NO) {
+    [self.elements addObject:info];
+  }
+  return array.position;
+}
+
+- (NSInteger) vertexCountOfDrawLine {
+  return 2;
+}
+
+- (void) drawLine:(GLShapeDrawerInfo *)info {
+  glLineWidth(info.lineWidth);
+  glDrawArrays(GL_LINES, info.offset, info.count);
+}
 
 /*!
  * 角度(radian)と半径から円周上のY座標を得る
