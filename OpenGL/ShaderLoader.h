@@ -21,7 +21,6 @@
  Shader の ロード,コンパイル
  */
 - (GLuint)loadShaders:(NSString *)name;
-- (GLuint)loadTextureShaders:(NSString *)name;
 - (BOOL)linkProgram;
 - (BOOL)validateProgram;
 - (void)releaseShaders;

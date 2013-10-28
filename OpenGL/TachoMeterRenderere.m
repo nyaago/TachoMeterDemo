@@ -266,8 +266,7 @@ NSInteger _needlePosition;
                                  radius:self.meterScaleCircleRadius - self.largeScaleLength - textSize];
     [self drawText:[self.parameters scaleText:v] x:x y:y z:0
               font:font textColor:self.scaleTextColor
-   backgroundColor:[UIColor clearColor]];
-
+   backgroundColor:[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.0f]];
     
   }
   
@@ -284,7 +283,7 @@ NSInteger _needlePosition;
   UIFont *font = [UIFont fontWithDescriptor:[baseFont fontDescriptor] size:textPxSize];
   [self drawText:self.noteText  x:x y:y z:0
             font:font textColor:self.noteTextColor
-   backgroundColor:[UIColor clearColor]];
+   backgroundColor:[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.0f]];
 }
 
 - (void) drawValueText {
