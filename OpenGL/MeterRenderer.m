@@ -28,7 +28,9 @@
 - (void)update
 {
   float aspect = fabsf(self.view.bounds.size.width / self.view.bounds.size.height);
-  GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0f), aspect, 0.1f, 100.0f);
+  GLKMatrix4 projectionMatrix = GLKMatrix4MakeOrtho(-self.aspect, self.aspect, -1.0f, 1.0f, -100, 100);
+
+//  GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0f), aspect, 0.1f, 100.0f);
   self.effect.transform.projectionMatrix = projectionMatrix;
   
   GLKMatrix4 baseModelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -4.0f);
@@ -158,9 +160,9 @@
   };
   CGFloat  uv[] = {
     0.0f, 1.0f,
-    0.0f, ((float)(bmpWidth - font.lineHeight * (1.0f + margin)) / bmpWidth),
+    0.0f, ((float)(bmpWidth - font.pointSize * (1.0f + margin)) / bmpWidth),
     1.0f, 1.0f,
-    1.0f, ((float)(bmpWidth - font.lineHeight * (1.0f + margin)) / bmpWidth),
+    1.0f, ((float)(bmpWidth - font.pointSize * (1.0f + margin)) / bmpWidth),
   };
   //頂点配列の指定
   NSInteger pos =[self texturePositionInValueVertex] * VERTEX_ATTRIB_SIZE ;
