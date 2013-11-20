@@ -27,7 +27,7 @@
 
 - (void)update
 {
-  float aspect = fabsf(self.view.bounds.size.width / self.view.bounds.size.height);
+  
   GLKMatrix4 projectionMatrix = GLKMatrix4MakeOrtho(-self.aspect, self.aspect, -1.0f, 1.0f, -100, 100);
 
 //  GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0f), aspect, 0.1f, 100.0f);
@@ -65,6 +65,7 @@
   glBindAttribLocation(_program, GLKVertexAttribPosition, "position");
   //  glBindAttribLocation(_program, GLKVertexAttribNormal, "normal");
   glBindAttribLocation(_program, GLKVertexAttribColor, "color");
+  glBindAttribLocation(_program, GLKVertexAttribTexCoord0, "texcoord");
   
   // Link program.
   if (![self.shaderLoader linkProgram]) {
@@ -75,6 +76,7 @@
   // Get uniform locations.
   uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX] = glGetUniformLocation(_program, "modelViewProjectionMatrix");
   uniforms[UNIFORM_NORMAL_MATRIX] = glGetUniformLocation(_program, "normalMatrix");
+
   
   // Release vertex and fragment shaders.
   [self.shaderLoader releaseShaders];
@@ -171,7 +173,10 @@
     [self.vertexs putValue:vertex[i * 3]];
     [self.vertexs putValue:vertex[i * 3 + 1]];
     [self.vertexs putValue:vertex[i * 3 + 2]];
-    [self.vertexs advancePosition:VERTEX_COLOR_SIZE];
+    [self.vertexs putValue:1.0];
+    [self.vertexs putValue:1.0];
+    [self.vertexs putValue:1.0];
+//    [self.vertexs advancePosition:VERTEX_COLOR_SIZE];
     [self.vertexs putValue:uv[i*2]];
     [self.vertexs putValue:uv[i*2+1]];
   }

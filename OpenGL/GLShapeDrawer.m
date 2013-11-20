@@ -246,7 +246,7 @@ enum {
   
   glLineWidth(info.lineWidth);
   glDrawArrays(GL_LINE_STRIP ,info.offset,info.count );
-  glDrawArrays(GL_POINTS ,info.offset,info.count );
+//  glDrawArrays(GL_POINTS ,info.offset,info.count );
 }
 
 - (NSInteger)drawLineInCircleVertex:(FloatArray *)array

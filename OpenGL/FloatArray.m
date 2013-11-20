@@ -37,6 +37,9 @@
 }
 
 - (NSInteger) advancePosition:(NSInteger)count {
+  for(int i = 0; i < count; ++i) {
+    *(_array + _position) = 0;
+  }
   _position += count;
   return _position;
 }

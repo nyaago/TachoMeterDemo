@@ -53,7 +53,7 @@ NSInteger _needlePosition;
 - (void)setupGL
 {
   [self loadShaders];
-  [self loadTextureShaders];
+//  [self loadTextureShaders];
   self.vertexs = [[FloatArray alloc] initWithCount:[self vertexArraySize]];
   [self setFrameVertex];
   [self setValueVertex];
@@ -116,23 +116,25 @@ NSInteger _needlePosition;
   
   glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, _modelViewProjectionMatrix.m);
   glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, _normalMatrix.m);
+  glUniform1i(glGetUniformLocation(_program, "texture"), 0);
   
 //  glDrawArrays(GL_TRIANGLE_STRIP, 0, 36);
+
   [self updateValueVertex];
   [self.shapeDrawer drawArrays];
   
   // 文字
   glEnable(GL_TEXTURE_2D);
   glDisable(GL_COLOR_ARRAY);
-  glUseProgram(_textureProgram);
+//  glUseProgram(_textureProgram);
   glDisableVertexAttribArray(GLKVertexAttribColor);
   glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0,
                      _modelViewProjectionMatrix.m);
   glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, _normalMatrix.m);
-  glUniform1i(glGetUniformLocation(_textureProgram, "texture"), 0);
   glEnableVertexAttribArray(GLKVertexAttribTexCoord0);
   [self drawFrameText];
   [self drawValueText];
+  glDisableVertexAttribArray(GLKVertexAttribTexCoord0);
 }
 
 
@@ -257,7 +259,13 @@ NSInteger _needlePosition;
                                           divides:self.parameters.maxValue - self.parameters.minValue + 1
                                         drawRatio:3.0f / 4.0f];
     UIFont *baseFont = self.scaleTextFont;
-    UIFont *font = [UIFont fontWithDescriptor:[baseFont fontDescriptor] size:textPxSize];
+    UIFont *font;
+    if([baseFont respondsToSelector:@selector(fontDescriptor)]) {
+      font = [UIFont fontWithDescriptor:[baseFont fontDescriptor] size:textPxSize];
+    }
+    else {
+      font = [UIFont systemFontOfSize:textPxSize];
+    }
     CGFloat x = [self.shapeDrawer
                  getXOfCircleWithRadian:radian
                                  radius:self.meterScaleCircleRadius - self.largeScaleLength - textSize];
@@ -280,7 +288,14 @@ NSInteger _needlePosition;
                getYOfCircleWithRadian:radian
                radius:0.35f];
   UIFont *baseFont = self.noteTextFont;
-  UIFont *font = [UIFont fontWithDescriptor:[baseFont fontDescriptor] size:textPxSize];
+  UIFont *font;
+  if([baseFont respondsToSelector:@selector(fontDescriptor)]) {
+    font = [UIFont fontWithDescriptor:[baseFont fontDescriptor] size:textPxSize];
+  }
+  else {
+    font = [UIFont systemFontOfSize:textPxSize];
+  }
+  
   [self drawText:self.noteText  x:x y:y z:0
             font:font textColor:self.noteTextColor
    backgroundColor:[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.0f]];
@@ -296,7 +311,14 @@ NSInteger _needlePosition;
                getYOfCircleWithRadian:radian
                radius:0.6f];
   UIFont *baseFont = self.valueTextFont;
-  UIFont *font = [UIFont fontWithDescriptor:[baseFont fontDescriptor] size:textPxSize];
+  UIFont *font;
+  if([baseFont respondsToSelector:@selector(fontDescriptor)]) {
+    font = [UIFont fontWithDescriptor:[baseFont fontDescriptor] size:textPxSize];
+  }
+  else {
+    font = [UIFont systemFontOfSize:textPxSize];
+  }
+
   NSString *s = nil;
   NSInteger max = self.parameters.maxValue;
   NSString *format = [NSString stringWithFormat:@"%%%dd", (int)log10((double)max) + 1];

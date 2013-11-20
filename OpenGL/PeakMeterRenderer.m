@@ -41,8 +41,8 @@
 
 - (void)setupGL
 {
+//  [self loadTextureShaders];
   [self loadShaders];
-  [self loadTextureShaders];
   self.vertexs = [[FloatArray alloc] initWithCount:[self vertexArraySize]];
   [self setFrameVertex];
   [self setValueVertex];
@@ -150,14 +150,15 @@
   [self.shapeDrawer drawArrays];
   
   // 文字
+  
   glEnable(GL_TEXTURE_2D);
   glDisable(GL_COLOR_ARRAY);
-  glUseProgram(_textureProgram);
+//  glUseProgram(_textureProgram);
   glDisableVertexAttribArray(GLKVertexAttribColor);
   glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0,
                      _modelViewProjectionMatrix.m);
   glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, _normalMatrix.m);
-  glUniform1i(glGetUniformLocation(_textureProgram, "texture"), 0);
+  glUniform1i(glGetUniformLocation(_program, "texture"), 0);
   glEnableVertexAttribArray(GLKVertexAttribTexCoord0);
   [self drawFrameText];
 //  [self drawValueText];
@@ -243,9 +244,14 @@
 
 - (void) drawFrameText {
   static CGFloat scalesForText[] = {0.0f, 0.5f, 1.0f};
-  UIFont *font = [UIFont fontWithDescriptor:[self.scaleTextFont fontDescriptor]
-                                       size:self.scaleTextSize];
-
+  UIFont *font;
+  if([self.scaleTextFont respondsToSelector:@selector(fontDescriptor)]) {
+    font = [UIFont fontWithDescriptor:[self.scaleTextFont fontDescriptor] size:self.scaleTextSize];
+  }
+  else {
+    font = [UIFont systemFontOfSize:self.scaleTextSize];
+  }
+  
   for(int i = 0; i < sizeof(scalesForText) / sizeof(CGFloat); ++i) {
     CGFloat p = scalesForText[i];
     NSInteger value = (NSInteger)((self.parameters.maxValue - self.parameters.minValue) * p)
