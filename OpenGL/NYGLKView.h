@@ -21,6 +21,9 @@
 @interface NYGLKView : GLKView
 
 @property (nonatomic) BOOL paused;
+/**
+ * 描画Interval - 1秒での最大描画数(描画後、次ぎの描画がこのInterval/60秒後にされるようにする）
+ */
 @property (nonatomic) NSInteger frameInterval;
 @property (nonatomic, strong) NSObject <NYGLKRenferer, GLKViewDelegate> *renderer;
 

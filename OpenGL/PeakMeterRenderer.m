@@ -61,22 +61,22 @@
   //  glBufferData(GL_ARRAY_BUFFER, sizeof(gCubeVertexData), gCubeVertexData, GL_STATIC_DRAW);
   
   glBufferData(GL_ARRAY_BUFFER,
-               sizeof(CGFloat) * [self.vertexs count] , self.vertexs.array, GL_STATIC_DRAW);
+               sizeof(float) * [self.vertexs count] , self.vertexs.array, GL_STATIC_DRAW);
   
   glEnableVertexAttribArray(GLKVertexAttribPosition);
   glVertexAttribPointer(GLKVertexAttribPosition, VERTEX_POS_SIZE, GL_FLOAT, GL_FALSE,
-                        VERTEX_ATTRIB_SIZE * sizeof(GLfloat),
+                        VERTEX_ATTRIB_SIZE * sizeof(float),
                         BUFFER_OFFSET(0));
   
   glEnableVertexAttribArray(GLKVertexAttribColor);
   glVertexAttribPointer(GLKVertexAttribColor, VERTEX_COLOR_SIZE, GL_FLOAT, GL_FALSE,
-                        VERTEX_ATTRIB_SIZE * sizeof(GLfloat),
-                        BUFFER_OFFSET(VERTEX_POS_SIZE * sizeof(GLfloat)));
+                        VERTEX_ATTRIB_SIZE * sizeof(float),
+                        BUFFER_OFFSET(VERTEX_POS_SIZE * sizeof(float)));
   
   glEnableVertexAttribArray(GLKVertexAttribTexCoord0);
   glVertexAttribPointer(GLKVertexAttribTexCoord0, TEXCOORDS_SIZE, GL_FLOAT, GL_FALSE,
-                        VERTEX_ATTRIB_SIZE * sizeof(GLfloat),
-                        BUFFER_OFFSET((VERTEX_POS_SIZE + VERTEX_COLOR_SIZE) * sizeof(GLfloat)));
+                        VERTEX_ATTRIB_SIZE * sizeof(float),
+                        BUFFER_OFFSET((VERTEX_POS_SIZE + VERTEX_COLOR_SIZE) * sizeof(float)));
   
   glBindVertexArrayOES(0);
 }
@@ -117,15 +117,15 @@
   [self setValueVertex];
   [self setOtherVertex];
   glBufferSubData(GL_ARRAY_BUFFER,
-                  [self valueVertexOffset] * VERTEX_ATTRIB_SIZE * sizeof(CGFloat) ,
-                  [self valueVertextCount] * VERTEX_ATTRIB_SIZE * sizeof(CGFloat),
+                  [self valueVertexOffset] * VERTEX_ATTRIB_SIZE * sizeof(float) ,
+                  [self valueVertextCount] * VERTEX_ATTRIB_SIZE * sizeof(float),
                   self.vertexs.array + [self valueVertexOffset] * VERTEX_ATTRIB_SIZE);
   glBufferSubData(GL_ARRAY_BUFFER,
-                  [self otherVertexOffset] * VERTEX_ATTRIB_SIZE * sizeof(CGFloat) ,
-                  [self otherVertextCount] * VERTEX_ATTRIB_SIZE * sizeof(CGFloat),
+                  [self otherVertexOffset] * VERTEX_ATTRIB_SIZE * sizeof(float) ,
+                  [self otherVertextCount] * VERTEX_ATTRIB_SIZE * sizeof(float),
                   self.vertexs.array + [self otherVertexOffset] * VERTEX_ATTRIB_SIZE);
 
-  glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+  glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   
   glBindVertexArrayOES(_vertexArray);
@@ -301,7 +301,7 @@
   
   self.scaleTextFont = [UIFont systemFontOfSize:14];
   
-  self.value = 40;
+  self.value = 10;
 }
 
 - (NSInteger) vertexArraySize {

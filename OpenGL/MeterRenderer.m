@@ -154,13 +154,13 @@
   float right = left + w;
   float bottom = bottom = y - (h / 2);
   float top = bottom + h;
-  CGFloat  vertex [] =  {
+  float  vertex [] =  {
     left, top, z,
     left, bottom, z,
     right, top, z,
     right, bottom, z
   };
-  CGFloat  uv[] = {
+  float  uv[] = {
     0.0f, 1.0f,
     0.0f, ((float)(bmpWidth - font.pointSize * (1.0f + margin)) / bmpWidth),
     1.0f, 1.0f,
@@ -182,8 +182,8 @@
   }
   
   glBufferSubData(GL_ARRAY_BUFFER,
-                  sizeof(CGFloat) * pos,
-                  4 * VERTEX_ATTRIB_SIZE * sizeof(CGFloat),
+                  sizeof(float) * pos,
+                  4 * VERTEX_ATTRIB_SIZE * sizeof(float),
                   self.vertexs.array + ( [self texturePositionInValueVertex] * VERTEX_ATTRIB_SIZE));
   //
   glDrawArrays(GL_TRIANGLE_STRIP, [self texturePositionInValueVertex], 4);

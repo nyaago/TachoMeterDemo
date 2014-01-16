@@ -25,6 +25,7 @@
 -(NSInteger) mediumScale;
 -(NSInteger) redZoneValue;
 -(NSInteger) scaleTextInterval;
+-(void) setRedZoneValue:(NSInteger)v;
 
 - (NSString *) scaleText:(NSInteger) value;
 
@@ -85,6 +86,15 @@
 @property (nonatomic, strong) NSString *noteText;
 @property (nonatomic, strong) NSNumber *value;
 
+/**
+ * チャートが更新している状態か？
+ */
+@property (nonatomic) BOOL active;
+/**
+ * チャート状態変更したか(全体の再描画が必要か)？
+ */
+
+@property (nonatomic) BOOL statusChanged;
 
 - (id) initWithView:(GLKView *)view;
 

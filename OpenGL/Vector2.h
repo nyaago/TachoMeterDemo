@@ -10,11 +10,11 @@
 
 @interface Vector2 : NSObject
 
-@property (nonatomic) CGFloat x;
-@property (nonatomic) CGFloat y;
-@property (nonatomic) CGFloat z;
+@property (nonatomic) float x;
+@property (nonatomic) float y;
+@property (nonatomic) float z;
 
-- (id) initWithX:(CGFloat)x y:(CGFloat)y ;
+- (id) initWithX:(float)x y:(float)y ;
 
 /*!
  * 移動行列演算
@@ -24,17 +24,17 @@
 /*!
  * 移動行列演算
  */
-- (Vector2 *) translateX:(CGFloat)x y:(CGFloat)y;
+- (Vector2 *) translateX:(float)x y:(float)y;
 
 /*!
  * 回転行列演算
  */
-- (Vector2 *) rotate:(CGFloat)degree;
+- (Vector2 *) rotate:(float)degree;
 
 /*!
  * @return XYZの３要素配列で返す
  */
-- (CGFloat *) xyz;
+- (float *) xyz;
 
 
 @end

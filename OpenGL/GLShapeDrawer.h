@@ -10,12 +10,28 @@
 #import "GLColor.h"
 #import "FloatArray.h"
 
+@interface  GLShapeDrawerInfo : NSObject
+
+@property (nonatomic) int type;
+@property (nonatomic) NSInteger count;
+@property (nonatomic) NSInteger offset;
+@property (nonatomic) NSInteger lineWidth;
+
+- (id) init:(int)type offset:(NSInteger)offset count:(NSInteger)count;
+- (id) init:(int)type offset:(NSInteger)offset count:(NSInteger)count
+  lineWidth:(NSInteger)lineWidth;
+
+
+@end
+
 @interface GLShapeDrawer : NSObject
 
 /*!
  設定した頂点の描画を実行
  */
 - (void) drawArrays;
+- (void) drawArray:(GLShapeDrawerInfo *)info;
+
 
 /*!
  * 円塗りつぶし描画のための頂点設定
@@ -81,7 +97,7 @@
  * @param color 色情報(a,r,g,b)
  * @param stride
  */
-- (NSInteger)drawLineInCircleVertex:(FloatArray *)array
+- (GLShapeDrawerInfo *)drawLineInCircleVertex:(FloatArray *)array
                                   x:(CGFloat)x y:(CGFloat)y
                              radius:(CGFloat)radius
                             divides:(NSInteger)divides
@@ -113,7 +129,7 @@
  * @param colors GLColorを要素とする
  * @param stride
  */
-- (NSInteger)drawNeedleVertex:(FloatArray *)array
+- (GLShapeDrawerInfo *)drawNeedleVertex:(FloatArray *)array
                         value:(NSInteger)value
                             x:(CGFloat)x y:(CGFloat)y
                        radius:(CGFloat)radius
@@ -143,7 +159,7 @@
  * @param divides 円の分割数（精度）
  * @param color 色情報(a,r,g,b)
  */
-- (NSInteger)fillTorusVertex:(FloatArray *)array
+- (GLShapeDrawerInfo *)fillTorusVertex:(FloatArray *)array
                            x:(CGFloat)x y:(CGFloat)y
                       radius:(CGFloat)radius
                  innerRadius:(CGFloat)innerRadius
@@ -200,7 +216,7 @@
  * @param color  色情報(a,r,g,b)
  * @param stride
  */
-- (NSInteger) fillTriangle:(FloatArray *)array
+- (GLShapeDrawerInfo *) fillTriangle:(FloatArray *)array
                     point1:(CGPoint)point1
                     point2:(CGPoint)point2
                     point3:(CGPoint)point3

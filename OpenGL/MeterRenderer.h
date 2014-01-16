@@ -21,7 +21,7 @@
 #define VERTEX_ATTRIB_SIZE 8
 
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
-#define CIRCLE_DIVIDES 250
+#define CIRCLE_DIVIDES 200
 
 // Uniform index.
 enum

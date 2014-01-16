@@ -62,7 +62,7 @@
                                             target:self
                                           selector:@selector(display)
                                           userInfo:nil
-                                           repeats:TRUE];
+                                           repeats:NO];
 }
 
 - (void) stop {
@@ -76,12 +76,27 @@
   self.delegate = renderer;
 }
 
+#pragma mark - Properties
+
+- (void) setPaused:(BOOL)paused {
+  _paused = paused;
+  if (paused == NO) {
+    [self display];
+  }
+}
+
+
 #pragma mark - Inherited From GLKView
 
 - (void) display {
   if(self.paused == NO) {
     [self update];
     [super display];
+      _timer = [NSTimer scheduledTimerWithTimeInterval:(NSTimeInterval)((1.0 / 60.0) * self.frameInterval)
+                                                target:self
+                                              selector:@selector(display)
+                                              userInfo:nil
+                                               repeats:NO];
   }
 }
 
@@ -128,7 +143,7 @@
 
 - (void) setDefault {
   _paused = NO;
-  _frameInterval = 20;
+  _frameInterval = 12;
 }
 
 @end

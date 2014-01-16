@@ -9,14 +9,14 @@
 #import "Vector2.h"
 
 @interface Vector2() {
-  CGFloat _xyz[3];
+  float _xyz[3];
 }
 
 @end
 
 @implementation Vector2
 
-- (id) initWithX:(CGFloat)x y:(CGFloat)y  {
+- (id) initWithX:(float)x y:(float)y  {
   self = [super init];
   if(self) {
     _x = x;
@@ -30,16 +30,16 @@
   return [[Vector2 alloc] initWithX:self.x + vec.x y:self.y + vec.y];
 }
 
-- (Vector2 *) translateX:(CGFloat)x y:(CGFloat)y {
+- (Vector2 *) translateX:(float)x y:(float)y {
   return [[Vector2 alloc] initWithX:self.x + x y:self.y + y];
 }
 
-- (Vector2 *) rotate:(CGFloat)degree {
+- (Vector2 *) rotate:(float)degree {
   return [[Vector2 alloc] initWithX:self.x * cos(degree) - self.y * sin(degree)
                                   y:self.x * sin(degree) + self.y * cos(degree)];
 }
 
-- (CGFloat  *) xyz {
+- (float  *) xyz {
   _xyz[0] = self.x;
   _xyz[1] = self.y;
   _xyz[2] = self.z;

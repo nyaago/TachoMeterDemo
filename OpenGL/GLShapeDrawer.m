@@ -12,19 +12,6 @@
 #import "GLShapeDrawer.h"
 #import "Vector2.h"
 
-@interface  GLShapeDrawerInfo : NSObject
-
-@property (nonatomic) int type;
-@property (nonatomic) NSInteger count;
-@property (nonatomic) NSInteger offset;
-@property (nonatomic) NSInteger lineWidth;
-
-- (id) init:(int)type offset:(NSInteger)offset count:(NSInteger)count;
-- (id) init:(int)type offset:(NSInteger)offset count:(NSInteger)count
-  lineWidth:(NSInteger)lineWidth;
-
-
-@end
 
 
 @interface GLShapeDrawer() {
@@ -138,37 +125,43 @@ enum {
   return self;
 }
 
+- (void) drawArray:(GLShapeDrawerInfo *)info {
+  switch (info.type) {
+      
+    case FILL_CIRCLE:
+      [self fillCircle:info];
+      break;
+    case DRAW_CIRCLE:
+      [self drawCircle:info];
+      break;
+    case DRAW_LINE_IN_CIRCLE :
+      [self drawLineInCircle:info];
+      break;
+    case DRAW_NEEDLE_IN_CIRCLE :
+      [self drawNeedle:info];
+      break;
+    case FILL_TORUS :
+      [self fillTorus:info];
+      break;
+    case FILL_RECTANGLE :
+      [self fillRectangle:info];
+      break;
+    case FILL_TRIANGLE :
+      [self fillTriangle:info];
+      break;
+    case DRAW_LINE :
+      [self drawLine:info];
+      break;
+    default:
+      break;
+  }
+  
+}
+
 - (void) drawArrays {
   for (NSObject *o  in self.elements) {
     GLShapeDrawerInfo *info = (GLShapeDrawerInfo *)o;
-    switch (info.type) {
-      case FILL_CIRCLE:
-        [self fillCircle:info];
-        break;
-      case DRAW_CIRCLE:
-        [self drawCircle:info];
-        break;
-      case DRAW_LINE_IN_CIRCLE :
-        [self drawLineInCircle:info];
-        break;
-      case DRAW_NEEDLE_IN_CIRCLE :
-        [self drawNeedle:info];
-        break;
-      case FILL_TORUS :
-        [self fillTorus:info];
-        break;
-      case FILL_RECTANGLE :
-        [self fillRectangle:info];
-        break;
-      case FILL_TRIANGLE :
-        [self fillTriangle:info];
-        break;
-      case DRAW_LINE :
-        [self drawLine:info];
-        break;
-      default:
-        break;
-    }
+    [self drawArray:info];
   }
   
   
@@ -177,8 +170,8 @@ enum {
 - (NSInteger)fillCircleVertex:(FloatArray *)array
                       x:(CGFloat)x y:(CGFloat)y radius:(CGFloat)radius
                 divides:(NSInteger)divides color:(GLColor *)color stride:(NSInteger)stride{
-  int offset = array.position;
-  int length = divides + 2;// 頂点数,2 => (中心と円のend=start)
+  NSInteger offset = array.position;
+  NSInteger length = divides + 2;// 頂点数,2 => (中心と円のend=start)
   
   //頂点配列情報
   [array putValue:x];
@@ -249,7 +242,7 @@ enum {
 //  glDrawArrays(GL_POINTS ,info.offset,info.count );
 }
 
-- (NSInteger)drawLineInCircleVertex:(FloatArray *)array
+- (GLShapeDrawerInfo *)drawLineInCircleVertex:(FloatArray *)array
                             x:(CGFloat)x y:(CGFloat)y
                              radius:(CGFloat)radius
                       divides:(NSInteger)divides
@@ -278,10 +271,11 @@ enum {
     [array putValues:[color rgbArray] count:3];
     [array advancePosition:stride > (3+3) ? (stride - (3 + 3)) : 0 ];
   }
-  [self.elements addObject:[[GLShapeDrawerInfo alloc]
+  GLShapeDrawer *element = [[GLShapeDrawerInfo alloc]
                             init:DRAW_LINE_IN_CIRCLE offset:offset / stride count:length * 2
-                            lineWidth:lineWidth]];
-  return array.position;
+                            lineWidth:lineWidth];
+  [self.elements addObject:element];
+  return element;
   
 }
 
@@ -298,7 +292,7 @@ enum {
   }
 }
 
-- (NSInteger)drawNeedleVertex:(FloatArray *)array
+- (GLShapeDrawerInfo *)drawNeedleVertex:(FloatArray *)array
                               value:(NSInteger)value
                                   x:(CGFloat)x y:(CGFloat)y
                              radius:(CGFloat)radius
@@ -341,7 +335,7 @@ enum {
   if([self.elements containsObject:info] == NO) {
     [self.elements addObject:info];
   }
-  return array.position;
+  return info;
 }
 
 - (NSInteger) vertexCountOfDrawNeedle {
@@ -362,7 +356,7 @@ enum {
 }
 
 
-- (NSInteger)fillTorusVertex:(FloatArray *)array
+- (GLShapeDrawerInfo *)fillTorusVertex:(FloatArray *)array
                                   x:(CGFloat)x y:(CGFloat)y
                              radius:(CGFloat)radius
                         innerRadius:(CGFloat)innerRadius
@@ -373,7 +367,14 @@ enum {
                              stride:(NSInteger)stride{
   
   int offset = array.position;
+  /*
   int newDevides = (int)(abs(endAngle - startAngle) / (2*M_PI) * divides);
+  if(newDevides > divides) {
+    newDevides = divides;
+  }
+  int length = newDevides + 1 ;// 頂点数
+   */
+  int newDevides = divides;
   int length = newDevides + 1 ;// 頂点数
 
   CGFloat angle = startAngle;
@@ -393,17 +394,27 @@ enum {
     [array advancePosition:stride > (3+3) ? (stride - (3 + 3)) : 0 ];
     angle += step;
   }
-  [self.elements addObject:[[GLShapeDrawerInfo alloc]
-                            init:FILL_TORUS offset:offset / stride count:length * 2
-                            lineWidth:0]];
-  return array.position;
+  GLShapeDrawerInfo *element = [[GLShapeDrawerInfo alloc]
+                               init:FILL_TORUS offset:offset / stride count:length * 2
+                               lineWidth:0];
+  [self.elements addObject:element];
+  return element;
 }
 
 - (NSInteger)vertexCountOfFillTorusWithDivides:(NSInteger)divides
                                     startAngle:(CGFloat)startAngle
                                       endAngle:(CGFloat)endAngle {
-  
-  return (int)(abs(endAngle - startAngle) / (2*M_PI) * divides + 1) * 2;
+  /*
+  int newDevides = (int)(abs(endAngle - startAngle) / (2*M_PI) * divides);
+  if(newDevides > divides) {
+    newDevides = divides;
+  }
+  int length = newDevides + 1 ;// 頂点数
+  return length * 2;
+   */
+  int newDevides = divides;
+  int length = newDevides + 1 ;// 頂点数
+  return length * 2;
 }
 
 - (void)fillTorus:(GLShapeDrawerInfo *)info {
@@ -419,7 +430,7 @@ enum {
                      stride:(NSInteger)stride
 {
   NSInteger offset = array.position;
-  CGFloat vertexs[][3] = {
+  float vertexs[][3] = {
     {left, top, 0},
     {right, top, 0},
     {left, bottom, 0},
@@ -427,7 +438,7 @@ enum {
   };
   
   for(int i = 0; i < 4; ++i) {
-    CGFloat *p = vertexs[i];
+    float *p = vertexs[i];
     [array putValues:p  count:3];
     [array putValues:[color rgbArray] count:3];
     [array advancePosition:stride > (3+3) ? (stride - (3 + 3)) : 0 ];
@@ -451,7 +462,7 @@ enum {
 }
 
 
-- (NSInteger) fillTriangle:(FloatArray *)array
+- (GLShapeDrawerInfo *) fillTriangle:(FloatArray *)array
                     point1:(CGPoint)point1
                     point2:(CGPoint)point2
                     point3:(CGPoint)point3
@@ -477,7 +488,7 @@ enum {
   if([self.elements containsObject:info] == NO) {
     [self.elements addObject:info];
   }
-  return array.position;
+  return info;
  
 }
 
